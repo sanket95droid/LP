@@ -1,0 +1,60 @@
+import java.util.Scanner;
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println("Enter number of process");
+	Scanner in = new Scanner(System.in);
+	int nop = in.nextInt();
+	
+	int[] ar = new int[nop];
+	int[] bt = new int[nop];
+	int[] ct = new int[nop];
+	int[] ta = new int[nop];
+	int[] wt = new int[nop];
+	int[] pid = new int[nop];
+	
+	for(int i = 0; i < nop; i++){
+	    System.out.println("Enter process" + (i + 1) + "arrival time");
+	    ar[i] = in.nextInt();
+	    System.out.println("Enter process" + (i + 1) + "burst time");
+	    bt[i] = in.nextInt();
+	    pid[i] = i + 1;
+	}
+	int temp;
+	for(int i = 0; i< nop; i++){
+	    for(int j = i + 1; j < nop; j++){
+	        if(ar[i] > ar[j]){
+	            temp = ar[i];
+	            ar[i] = ar[j];
+	            ar[j] = temp;
+	            
+	            temp = bt[i];
+	            bt[i] = bt[j];
+	            bt[j] = temp;
+	            
+	            temp = pid[i];
+	            pid[i] = pid[j];
+	            pid[j] = temp;
+	        }
+	    }    
+	}
+	System.out.println();
+	ct[0] = bt[0] + ar[0];
+	for(int i = 1; i < nop; i++){
+	    ct[i] = ct[i - 1] + bt[i];
+	}
+	
+	for(int i = 0; i < nop; i++){
+	    ta[i] = ct[i] - ar[i];
+	    wt[i] = ta[i] - bt[i];
+	}
+	System.out.println("Process" + " " + "AT" + " " + "BT" + " " + "CT" + " " + "TAT" + " " + "WT");
+	for(int i = 0; i < nop; i++){
+	    System.out.println(pid[i] + " " + ar[i] + " " + bt[i] + " " + ct[i] + " " + ta[i] + " " + wt[i]);
+	}
+	System.out.println("gantt chart : ");
+	for(int i = 0; i < nop; i++){
+	    System.out.print("P" + pid[i] + " ");
+	}
+	}
+}
